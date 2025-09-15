@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Blogs</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <%- include('partials/blogNav') %>
+
+  <!--Profile Section -->
+  <section class="profile container">
+    <div class="profile-card">
+      <h2><%= user.username %> </h2>
+      <p>Email: <%= user.email %></p>
+      <p>Total Blogs: <%= blogs.length %></p>
+    </div>
+  </section>
+
+  <!-- My Blogs Section -->
+  <main class="container">
+    <h1 class="page-title">My Blogs</h1>
+
+    <% if (blogs && blogs.length > 0) { %>
+      <div class="blogs-list">
+        <% blogs.forEach(blog => { %>
+          <div class="blog-card full-width">
+            <h2><%= blog.title %></h2>
+            <p class="blog-date">Created on <%= blog.createdAt.toDateString() %></p>
+            <p class="blog-snippet"><%= blog.content ? blog.content.substring(0, 180) : "" %>...</p>
+
+            <div class="blog-actions">
+                <a href="/blogs/<%= blog._id %>" class="btn btn-view">View</a>
+                <a href="/blogs/<%= blog._id %>/edit" class="btn btn-edit">Edit</a>
+                <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST" style="display:inline;">
+                  <button type="submit" class="btn btn-delete">Delete</button>
+                </form>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p>You haven't written any blogs yet. <a href="/blogs/create">Write your first blog</a> </p>
+    <% } %>
+  </main>
+<%- include('partials/footer') %>
+</body>
+</html>

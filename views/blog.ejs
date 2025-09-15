@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= blog.title %> | MyBlog</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <%- include('partials/blogNav') %>
+
+  <main class="container single-blog">
+    <h1><%= blog.title %></h1>
+    <p class="blog-author">Author: <%= blog.author ? blog.author.username : "Unknown Author" %></p>
+    <p class="blog-date">Created on <%= blog.createdAt.toDateString() %></p>
+
+    <div class="blog-content">
+      <p><%= blog.content %></p>
+    </div>
+
+    <% if (
+      user && user._id &&
+      blog.author && blog.author._id &&
+      blog.author._id.toString() === user._id.toString()
+    ) { %>
+      <div class="blog-actions">
+        <a href="/blogs/<%= blog._id %>/edit" class="btn btn-edit">Edit</a>
+        <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST" style="display:inline;">
+          <button type="submit" class="btn btn-delete">Delete</button>
+        </form>
+      </div>
+    <% } %>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

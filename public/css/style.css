@@ -1,0 +1,462 @@
+/* ==============================
+   GLOBAL STYLES
+============================== */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f6f8;
+  color: #333;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px 0;
+}
+
+/* ==============================
+   NAVBAR
+============================== */
+.navbar {
+  background: #222;
+  color: #fff;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #00bcd4;
+}
+
+/* ==============================
+   DASHBOARD HEADER
+============================== */
+.dashboard-header {
+  text-align: center;
+  padding: 40px 0 20px;
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.dashboard-header p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* ==============================
+   BLOG CARDS GRID
+============================== */
+.blogs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.blog-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.blog-card h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: #222;
+}
+
+.blog-card p {
+  font-size: 1rem;
+  color: #555;
+  margin: 10px 0 15px;
+}
+
+/* ==============================
+   BUTTONS
+============================== */
+.btn {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s ease;
+  margin-right: 8px;
+}
+
+.btn-view {
+  background: #00bcd4;
+  color: #fff;
+}
+
+.btn-view:hover {
+  background: #0097a7;
+}
+
+.btn-edit {
+  background: #4caf50;
+  color: #fff;
+}
+
+.btn-edit:hover {
+  background: #388e3c;
+}
+
+.btn-delete {
+  background: #f44336;
+  color: #fff;
+}
+
+.btn-delete:hover {
+  background: #d32f2f;
+}
+
+/* ==============================
+   FORMS (Login/Register)
+============================== */
+.form-container {
+  max-width: 400px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.form-container h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.form-container button {
+  width: 100%;
+  padding: 12px;
+  background: #00bcd4;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.form-container button:hover {
+  background: #0097a7;
+}
+
+/* ==============================
+   BLOG FORM STYLING
+============================== */
+.form-container textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+/* ==============================
+   SINGLE BLOG VIEW
+============================== */
+.single-blog {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-top: 30px;
+}
+
+.single-blog h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.blog-meta {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.blog-content {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #444;
+}
+/* Blogs list - one per row */
+.blogs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.blog-card.full-width {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  width: 100%;
+}
+
+.blog-snippet {
+  color: #444;
+  margin: 10px 0;
+}
+
+.blog-actions {
+  margin-top: 10px;
+}
+
+/* Single Blog Page */
+.single-blog {
+  max-width: 800px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.single-blog h1 {
+  margin-bottom: 10px;
+}
+
+.blog-date {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.blog-content p {
+  line-height: 1.6;
+  font-size: 1.1rem;
+  color: #333;
+}
+/*Profile Section */
+.profile {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card {
+  background: #fff;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.profile-card h2 {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.profile-card p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+.footer {
+  text-align: center;
+  padding: 10px;
+  background: #f4f4f4;  /* optional background */
+  position: fixed;      /* makes it stick */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+/*Dashboard */
+.blogs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/*Blog Card */
+.blog-card.full-width {
+  width: 100%;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.blog-card.full-width h2 {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.blog-card.full-width p {
+  color: #555;
+  margin-bottom: 0.8rem;
+}
+/*Button Base */
+.btn {
+  display: inline-block;
+  padding: 8px 14px;
+  margin: 5px 3px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+/*View Button */
+.btn-view {
+  background: #007bff;
+  color: #fff;
+  border: none;
+}
+.btn-view:hover {
+  background: #0056b3;
+}
+
+/*Edit Button */
+.btn-edit {
+  background: #ffc107;
+  color: #000;
+  border: none;
+}
+.btn-edit:hover {
+  background: #e0a800;
+  color: #fff;
+}
+
+/*Delete Button */
+.btn-delete {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.btn-delete:hover {
+  background: #a71d2a;
+}
+.blogs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.blogs-grid > *:last-child {
+  margin-bottom: 0; /* prevents extra cut-off spacing */
+}
+/* Form Card */
+.form-card {
+  background: #fff;
+  padding: 2rem;
+  max-width: 600px;
+  margin: 2rem auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.form-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.form-subtitle {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.input-field, .textarea-field {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.input-field:focus, .textarea-field:focus {
+  border-color: #007BFF;
+}
+
+/* Buttons */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-save {
+  background: #007BFF;
+  color: #fff;
+  border: none;
+}
+
+.btn-save:hover {
+  background: #0056b3;
+}
+
+.btn-cancel {
+  background: #f4f4f4;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.btn-cancel:hover {
+  background: #e0e0e0;
+}

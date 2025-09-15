@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Blogs || Blogs</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+ <%- include('partials/blogNav') %>
+
+  <!--All Blogs Section -->
+  <main class="container">
+    <h1 class="page-title">Explore All Blogs</h1>
+
+    <% if (blogs.length === 0) { %>
+      <p class="no-blogs">No blogs have been posted yet. <a href="/blogs/create">Be the first to write one</a></p>
+    <% } else { %>
+      <div class="blog-grid">
+        <% blogs.forEach(blog => { %>
+          <div class="blog-card">
+            <h2><%= blog.title %></h2>
+
+            <p class="blog-author">
+              Author: <%= blog.author ? blog.author.username : "Unknown Author" %>
+            </p>
+
+            <p class="blog-snippet">
+              <%= blog.content ? blog.content.substring(0, 100) : "" %>...
+            </p>
+
+            <a href="/blogs/<%= blog._id %>" class="btn btn-view">Read More</a>
+
+            <% if (
+                user && user._id &&
+                blog.author && blog.author._id &&
+                blog.author._id.toString() === user._id.toString()
+            ) { %>
+              <a href="/blogs/<%= blog._id %>/edit" class="btn btn-edit">Edit</a>
+              <form action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+                <button type="submit">Delete</button>
+              </form>
+            <% } %>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </main>
+
+</body>
+</html>
+<%- include("partials/pagination", { currentPage, totalPages, baseUrl: "/blogs" }) %>
+<%- include('partials/footer') %>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create a new blog</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <%- include('partials/blogNav') %>
+
+  <!--Blog Form -->
+  <div class="form-container">
+    <h2>Create a New Blog</h2>
+    <form action="/blogs/create" method="POST">
+      <input type="text" name="title" placeholder="Blog Title" required>
+      <textarea name="content" rows="8" placeholder="Write your blog content here..." required></textarea>
+      <button type="submit">Publish Blog</button>
+    </form>
+  </div>
+
+</body>
+</html>
+
+<%- include('partials/footer') %>

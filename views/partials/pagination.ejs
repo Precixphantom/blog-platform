@@ -1,0 +1,19 @@
+<% if (totalPages > 1) { %>
+<div class="pagination" style="margin-top: 20px;">
+    <% if (currentPage > 1) { %>
+        <a href="<%= baseUrl %>?page=<%= currentPage - 1 %>">Previous</a>
+    <% } %>
+
+    <% for (let i = 1; i <= totalPages; i++) { %>
+        <% if (i === currentPage) { %>
+            <strong><%= i %></strong>
+        <% } else { %>
+            <a href="<%= baseUrl %>?page=<%= i %>"><%= i %></a>
+        <% } %>
+    <% } %>
+
+    <% if (currentPage < totalPages) { %>
+        <a href="<%= baseUrl %>?page=<%= currentPage + 1 %>">Next</a>
+    <% } %>
+</div>
+<% } %>
