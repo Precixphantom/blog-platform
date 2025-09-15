@@ -17,6 +17,11 @@ app.use(express.static("public"));
 
 app.set('view engine', 'ejs');
 
+app.get('/', (req, res) => {
+  res.redirect('/myBlogs');
+});
+
+
 // Routes
 const authRoutes = require('./routes/authRoutes');
 const blogRoutes = require('./routes/blogRoutes');
