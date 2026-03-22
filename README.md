@@ -234,7 +234,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 I'm Precious Afolabi, a **Backend Developer** learning in public and building projects to understand how things work behind the scenes. I'm curious about authentication, databases, APIs, and everything that powers modern web applications.
 
-This project represents where I was three months ago. It's not perfect, but it's real progress, and I'm proud of shipping something functional while continuing to improve it.
+This project is actively evolving as I learn. I revisit and improve it with every new concept I pick up — and I'm proud of shipping something functional while continuing to make it better.
 
 ### Let's Connect
 
