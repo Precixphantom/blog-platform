@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Blacklist = require('../models/Blacklist');
 const Blog = require('../models/Blog');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/AppError');
 
 // show register form
 const showRegister = (req, res) => {
@@ -10,15 +12,16 @@ const showRegister = (req, res) => {
 };
 
 // handle register
-const registerUser = async (req, res) => {
-    try {
-        const {username, email, password} = req.body;
+const registerUser = catchAsync(async (req, res, next) => {
+    const {username, email, password} = req.body;
 
         // Check User
         const existingUser = await User.findOne({email});
+
         if (existingUser) {
-            return res.status(400).send("User already exist");
+            return next(new AppError('User already exist', 400));
         }
+
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -31,12 +34,7 @@ const registerUser = async (req, res) => {
         await newUser.save();
 
         res.redirect('/login');
-    }
-    catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server error");
-    }
-};
+})
 
 // show login form
 const showLogin = (req, res) => {
@@ -44,20 +42,21 @@ const showLogin = (req, res) => {
 }
 
 // handle login
-const loginUser = async (req, res) => {
-    try {
+const loginUser = catchAsync(async (req, res, next) => {
         const {email, password} = req.body;
 
         // Check user
         const user = await User.findOne({email});
+
         if (!user) {
-            return res.status(400).send("User does not exists");
+            return next (new AppError('Invalid email or password', 401));
         }
 
         // Check password
         const isPassword = await bcrypt.compare(password, user.password);
+
         if (!isPassword) {
-            return res.status(400).send("Incorrect password");
+            return next(new AppError('Incorrect email or password', 401));
         }
         
         // create token
@@ -67,8 +66,6 @@ const loginUser = async (req, res) => {
             {expiresIn: "1h"}
         );
 
-
-
         // send token in cookie
         res.cookie("token", token, {
             httpOnly: true,
@@ -77,17 +74,12 @@ const loginUser = async (req, res) => {
 
         // redirect
         res.redirect('/myBlogs');
-    }
-    catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server error");
-    }
-};
+})
 
 // handle logout
-const logoutUser = async (req, res) => {
-    try {
-        const token = req.cookies.token;
+const logoutUser = catchAsync(async (req, res, next) => {
+    const token = req.cookies.token;
+
         if (!token) {
             return res.redirect('/login');
         }
@@ -102,27 +94,16 @@ const logoutUser = async (req, res) => {
         res.clearCookie("token");
 
         res.redirect('/login');
-    }
-    catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server error")
-    }
-}
+})
 
 // dashboard
-const showDashboard = async (req, res) => {
-    try {
-        const blogs = await Blog.find()
+const showDashboard = catchAsync(async (req, res) => {
+    const blogs = await Blog.find()
             .populate('author', 'username')
             .sort({createdAt: -1});
         
         res.render('dashboard', {user: req.user, blogs});
-    }
-    catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error");
-    }
-}
+})
 
 module.exports = {
     showRegister,

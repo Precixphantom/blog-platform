@@ -25,13 +25,19 @@ app.get('/', (req, res) => {
 // Routes
 const authRoutes = require('./routes/authRoutes');
 const blogRoutes = require('./routes/blogRoutes');
+const commentRoutes = require('./routes/commentRoutes');
 
 app.use('/', authRoutes);
 app.use('/', blogRoutes);
+app.use('/', commentRoutes);
 
 app.get('/', (req, res) => {
     res.render('index', {user: null, title: "Home"});
 });
+
+// Error handling middleware
+const errorHandler = require('./middleware/errorHandler');
+app.use(errorHandler)
 
 
 // Connect to MongoDB

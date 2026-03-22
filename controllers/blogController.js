@@ -1,4 +1,7 @@
 const Blog = require('../models/Blog');
+const Comment = require('../models/Comment')
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/AppError');
 
 // show create blog form
 const createBlogForm = (req, res) => {
@@ -7,13 +10,12 @@ const createBlogForm = (req, res) => {
 
 
 // handle create blog
-const createBlog = async (req, res) => {
-    try {
-        const { title, content} = req.body;
+const createBlog = catchAsync(async (req, res, next) => {
+    const { title, content} = req.body;
 
         // Validation
         if (!title || !content) {
-            return res.status(400).send("Title and Content are required");
+            return next(new AppError('Title and content are required', 400))
         }
 
         // Instance of a blog
@@ -26,16 +28,10 @@ const createBlog = async (req, res) => {
         await blog.save();
 
         res.redirect('/myBlogs');
-    }
-    catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error");
-    }
-}
+})
 
-const getAllBlogs = async (req, res) => {
-    try {
-        const page = parseInt(req.query.page) || 1;
+const getAllBlogs = catchAsync(async (req, res, next) => {
+    const page = parseInt(req.query.page) || 1;
         const limit = 5;
 
        const totalBlogs = await Blog.countDocuments();
@@ -52,134 +48,98 @@ const getAllBlogs = async (req, res) => {
             currentPage: page,
             totalPages
         });
-    }
-    catch (err) {
-        console.err(err.message);
-        res.status(500).send("Server Error");
-    }
-};
+})
 
-const getBlog = async (req, res) => {
-    try {
+const getBlog = catchAsync(async (req, res, next) => {
         const {id} = req.params;
 
         const blog = await Blog.findById(id)
             .populate('author', 'username email')
         
         if (!blog) {
-            return res.status(404).send("Blog not found");
+            return next(new AppError('Blog not found', 404));
         }
 
-        res.render('blog', {blog, user: req.user});
-    }
-    catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error");
-    }
-};
+        const comments = await Comment.find({blog: id})
 
-const getMyBlogs = async (req, res) => {
-    try {
-        const blogs = await Blog.find({author: req.user._id})
+        res.render('blog', {blog, user: req.user, comments});
+})
+
+const getMyBlogs = catchAsync(async (req, res, next) => {
+    const blogs = await Blog.find({author: req.user._id})
             .populate('author', 'username email')
             .sort({createdAt: -1});
         res.render('myBlogs', {blogs, user: req.user});
-    }
-    catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error");
-    }
-}
+})
 
 // show update blog form
-const updateBlogForm = async (req, res) => {
-    try {
+const updateBlogForm = catchAsync(async (req, res, next) => {
         const {id} = req.params;
 
         const blog = await Blog.findById(id)
             
 
         if (!blog) {
-            return res.status(404).send("Blog not found");
+            return next(new AppError('Blog not found', 404));
         }
 
         // Check ownership
         if (blog.author.toString() !== req.user.id) {
-            return res.status(403).send("Unauthorized");
+            return next(new AppError('Unauthorized', 403));
         }
         res.render('editBlog', {blog, user: req.user})
-
-    }
-    catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error")
-    }
-}
+})
 
 
 // handle update blog
-const updateBlog = async (req, res) => {
-    try {
-        const {id} = req.params;
+const updateBlog = catchAsync(async (req, res, next) => {
+    const {id} = req.params;
 
         const blog = await Blog.findById(id)
             
 
         if (!blog) {
-            return res.status(404).send("Blog not found");
+            return next(new AppError('Blog not found', 404));
         }
 
         // Check ownership
         if (blog.author.toString() !== req.user.id) {
-            return res.status(403).send("Unauthorized");
+            return next(new AppError('Unauthorized', 403));
         }
 
         const {title, content} = req.body;
 
-        blog.title = req.body.title || blog.title;
-        blog.content = req.body.content || blog.content;
-
-        // await blog.save();
         await Blog.findByIdAndUpdate(id, {title, content}, {new: true});
 
         res.redirect('/myBlogs');
-    }
-    catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error");
-    }
-};
+})
 
-const deleteBlog = async (req, res) => {
-    try {
-        const {id} = req.params;
+const deleteBlog = catchAsync(async (req, res, next) => {
+    const {id} = req.params;
 
         const blog = await Blog.findById(id);
 
         if (!blog) {
-            return res.status(404).send("Blog not found");
+            return next(new AppError('Blog not found', 404));
         }
 
         if (!req.user) {
-            return res.status(401).send("User is not authenticated");
+            return next(new AppError('User id not authenticated', 401));
         }
+
         if (!blog.author) {
-            return res.status(400).send("Blog has no author information")
+            return next(new AppError('Blog has no author information', 400));
         }
+
         // Check ownership
         if (blog.author.toString() !== req.user._id.toString()) {
-            return res.status(403).send("Unauthorized");
+            return next(new AppError('Unauthorized', 403));
         }
 
         await Blog.findByIdAndDelete(id);
 
         res.redirect('/myBlogs');
-    }
-    catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error");
-    }
-};
+})
 
 module.exports = {
     createBlogForm,

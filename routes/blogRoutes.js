@@ -10,7 +10,7 @@ router.get('/blogs', controller.getAllBlogs);
 // show create blog form
 router.get('/blogs/create', authMiddleware, controller.createBlogForm);
 
-// handele create blog
+// handle create blog
 router.post('/blogs/create', authMiddleware, controller.createBlog);
 
 // get user's blogs
