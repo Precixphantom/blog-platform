@@ -27,8 +27,9 @@ I wanted to understand what happens behind the scenes when you log into a websit
 
 Currently, users can write and publish their thoughts. The platform distinguishes between your own blogs and others' content, creating a personalized reading experience.
 
-**Coming soon:** Comments, likes, and sharing features to transform EchoHub into a true community platform where ideas don't just exist—they echo and evolve through conversation.
+**Recent update:** Comments API is now live. Authenticated users can create and delete comments on any blog post via API endpoints.
 
+**Still coming:** Likes, sharing, and search to complete the community experience
 ---
 
 ## ✨ Features
@@ -41,12 +42,13 @@ Currently, users can write and publish their thoughts. The platform distinguishe
 - 👤 **Personal Dashboard** - View and manage your own blogs separately
 - ✏️ **Edit & Delete** - Full CRUD operations on your content
 - 🎨 **Responsive Design** - Works across desktop and mobile devices
+- 💬 **Comments (API)** - Backend endpoints for creating, fetching, and deleting comments. Frontend UI coming soon.
 
 ### Roadmap (What's Next)
 
 - [ ] Email verification for new users
 - [ ] Dark/Light theme toggle
-- [ ] Comment system
+- [x] Comment system (API complete, frontend coming soon)
 - [ ] Like and share functionality
 - [ ] User profiles with avatars
 - [ ] Search and filter blogs
@@ -141,9 +143,12 @@ Currently, users can write and publish their thoughts. The platform distinguishe
 ```
 blog-platform/
 ├── controllers/       # Route logic and business logic
-├── middleware/        # Authentication and validation middleware
+├── middleware/        # Authentication, validation, and error handling
 ├── models/           # Mongoose schemas and models
 ├── routes/           # API route definitions
+├── utils/
+│   ├── AppError.js   # Custom error class
+│   └── catchAsync.js # Async error wrapper
 ├── views/            # EJS templates
 ├── public/
 │   └── css/         # Stylesheets
@@ -170,6 +175,7 @@ Building EchoHub taught me more than I expected:
 - **Authentication ≠ Authorization** - Logging in is one thing; ensuring users can only access their own resources is another
 - **State management matters** - Sessions, cookies, and JWTs each solve different problems
 - **Error handling is crucial** - Things break in production in ways they never do locally
+- **Centralized error handling** - AppError and catchAsync remove repetition and make errors consistent across the entire app
 
 ### What I'd Do Differently Now
 
@@ -188,7 +194,6 @@ Three months later, I'd approach several things differently:
 Being honest about where the project stands:
 
 - **Cold starts**: Render free tier sleeps after inactivity (30-60s initial load)
-- **No pagination**: Performance will degrade with thousands of posts
 - **Basic UI**: Functional but not polished—design improvements coming
 - **No real-time features**: Comments/likes will need page refreshes initially
 - **Limited error feedback**: User-facing error messages could be more helpful
@@ -227,7 +232,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 About Me
 
-I'm Precious Afolabi, a **Junior Backend Developer** learning in public and building projects to understand how things work behind the scenes. I'm curious about authentication, databases, APIs, and everything that powers modern web applications.
+I'm Precious Afolabi, a **Backend Developer** learning in public and building projects to understand how things work behind the scenes. I'm curious about authentication, databases, APIs, and everything that powers modern web applications.
 
 This project represents where I was three months ago. It's not perfect, but it's real progress, and I'm proud of shipping something functional while continuing to improve it.
 
@@ -253,7 +258,7 @@ This project represents where I was three months ago. It's not perfect, but it's
 
 **Active Development** - I'm continuously improving this project as I learn new concepts and best practices. Check the [Issues](https://github.com/Precixphantom/blog-platform/issues) page to see what I'm working on next.
 
-**Last Updated**: December 2024
+**Last Updated**: March 2026
 
 ---
 
